@@ -5,26 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Great Trucking Insurance</title>
 
-   <!-- CertifiedConnection (ConsentConfirmation) -->
-<script>
-  (function () {
-    // Set token FIRST (prevents race condition)
-    window.xxConsentConfirmationTokenxx = "4202d714d2284b5e93af81627ca6b08a";
-
-    if (document.getElementById("xxConsentConfirmationxx")) return;
-
-    var s = document.createElement("script");
-    s.id = "xxConsentConfirmationxx";
-    s.type = "text/javascript";
-    s.async = true;
-    s.src = "https://cdn.consentconfirmation.com/bundle-prod.js";
-
-    var ss = document.getElementsByTagName("script")[0];
-    ss.parentNode.insertBefore(s, ss);
-  })();
-</script>
-
-    <!-- Turnstile -->
+      <!-- Turnstile -->
     <script
       src="https://challenges.cloudflare.com/turnstile/v0/api.js"
       async
@@ -540,7 +521,20 @@
           runtime.smsMode = "off";
         }
       }
+function loadConsentConfirmationOnce() {
+  if (window.__ccLoaded) return;
+  window.__ccLoaded = true;
 
+  // Campaign token (DO NOT change this)
+  window.xxConsentConfirmationTokenxx = "4202d714d2284b5e93af81627ca6b08a";
+
+  var s = document.createElement("script");
+  s.id = "xxConsentConfirmationxx";
+  s.type = "text/javascript";
+  s.async = true;
+  s.src = "https://cdn.consentconfirmation.com/bundle-prod.js";
+  document.head.appendChild(s);
+}
       /* =========================
          STATE + STEPS
       ========================= */
@@ -863,6 +857,7 @@
       }
 
       function renderPhone(c){
+         loadConsentConfirmationOnce();
   const inputWrap = document.createElement("div");
   inputWrap.className = "inputWrap";
   inputWrap.innerHTML = `
