@@ -55,13 +55,19 @@ export async function onRequestPost({ request, env }) {
       body: JSON.stringify({ token: turnstileToken }),
     });
 
-    const verifyData = await verifyResp.json();
-    if (!verifyData.success) {
-      return new Response(
-        JSON.stringify({ ok: false, error: "Turnstile verification failed." }),
-        { status: 400, headers: { "Content-Type": "application/json" } }
-      );
-    }
+const verifyData = await verifyResp.json();
+
+if (!verifyData?.success) {
+  return new Response(
+    JSON.stringify({
+      ok: false,
+      error: "Turnstile verification failed.",
+      verifyData, // <-- includes error-codes from /api/turnstile/verify
+      verifyStatus: verifyResp.status,
+    }),
+    { status: 400, headers: { "Content-Type": "application/json" } }
+  );
+}
 
     // Twilio creds required (Lookup uses SID+AUTH; we also require FROM for sending mode)
     if (!env.TWILIO_ACCOUNT_SID || !env.TWILIO_AUTH_TOKEN) {
