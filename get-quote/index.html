@@ -1,0 +1,1095 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Great Trucking Insurance</title>
+
+    <!-- CertifiedConnection (ConsentConfirmation) -->
+    <script>
+      (function () {
+        var s = document.createElement("script");
+        s.id = "xxConsentConfirmationxx";
+        if (document.getElementById("xxConsentConfirmationxx")) return;
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://cdn.consentconfirmation.com/bundle-prod.js";
+        var ss = document.getElementsByTagName("script")[0];
+        ss.parentNode.insertBefore(s, ss);
+        window.xxConsentConfirmationTokenxx = "96c2db583993420ebd2cdd7d5538ffb8"; // <-- replace
+      })();
+    </script>
+
+    <!-- Turnstile -->
+    <script
+      src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+      async
+      defer
+    ></script>
+<!-- Phone validation (offline, free) -->
+<script src="https://unpkg.com/libphonenumber-js@1.12.15/bundle/libphonenumber-min.js"></script>
+    <style>
+      :root{
+        --bg: #f5f7fb;
+        --tile: #ffffff;
+        --ink: #0f172a;
+        --muted: #64748b;
+        --border: #e5e7eb;
+        --blue: #1f5bd8;
+        --green: #22c55e;
+        --shadow: 0 10px 30px rgba(2,6,23,0.08);
+        --radius: 18px;
+        --inputW: 560px;
+      }
+
+      *{ box-sizing:border-box; }
+      html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+      body{
+        margin:0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+        background: var(--bg);
+        color: var(--ink);
+      }
+
+      .topbar{
+        height:64px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        padding:0 22px;
+      }
+      .brand{
+        display:flex;
+        align-items:center;
+        gap:10px;
+        font-weight:700;
+      }
+      .brandMark{
+        width:26px;
+        height:26px;
+        border-radius:7px;
+        background:#0b1220;
+        color:#fff;
+        display:grid;
+        place-items:center;
+        font-size:12px;
+        font-weight:800;
+      }
+      .topRight{
+        display:flex;
+        align-items:center;
+        gap:14px;
+        color: var(--muted);
+        font-weight:600;
+        font-size:13px;
+      }
+      .phonePill{
+        display:flex;
+        align-items:center;
+        gap:8px;
+        border:1px solid var(--border);
+        background:#fff;
+        padding:8px 12px;
+        border-radius:999px;
+        color:#0f172a;
+        font-weight:700;
+      }
+      .phonePill img{
+        width:16px;
+        height:16px;
+        display:block;
+      }
+
+      .wrap{
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 14px 18px 28px;
+      }
+      .tile{
+        width: min(980px, 100%);
+        margin: 18px auto 0;
+        background: var(--tile);
+        border: 1px solid rgba(15,23,42,0.08);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 28px 24px 18px;
+      }
+
+      .progressRow{
+        display:flex;
+        align-items:center;
+        gap:12px;
+        margin-bottom: 18px;
+      }
+      .progressTrack{
+        flex:1;
+        height:8px;
+        background:#e8edf6;
+        border-radius:999px;
+        overflow:hidden;
+      }
+      .progressBar{
+        height:100%;
+        width:0%;
+        background: var(--green);
+        border-radius:999px;
+        transition: width .25s ease;
+      }
+      .progressPct{
+        width:46px;
+        text-align:right;
+        font-weight:700;
+        color:#94a3b8;
+        font-size:13px;
+      }
+
+      .topLine{
+        text-align:center;
+        color: var(--muted);
+        font-weight:700;
+        font-size:14px;
+        margin: 6px 0 14px;
+      }
+
+      .socialLine{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:10px;
+        font-weight:800;
+        color:#64748b;
+        font-size:14px;
+        margin: 0 0 12px;
+      }
+      .dot{
+        width:9px;
+        height:9px;
+        border-radius:999px;
+        background: var(--green);
+        box-shadow: 0 0 0 4px rgba(34,197,94,0.14);
+      }
+
+      h1.question{
+        text-align:center;
+        margin: 6px 0 18px;
+        font-size: 44px;
+        line-height:1.1;
+        letter-spacing:-0.02em;
+      }
+
+      .inputWrap{
+        display:flex;
+        justify-content:center;
+      }
+      input, .btn, .choiceGrid{
+        width: min(var(--inputW), 100%);
+      }
+
+      input{
+        height:56px;
+        border-radius:14px;
+        border: 1px solid rgba(100,116,139,0.35);
+        outline:none;
+        padding: 0 18px;
+        font-size:18px;
+        font-weight:700;
+        text-align:center;
+        color:#0f172a;
+        background:#fff;
+      }
+      input::placeholder{ color:#94a3b8; font-weight:700; text-align:center; }
+      input:focus{
+        border-color: rgba(31,91,216,0.55);
+        box-shadow: 0 0 0 4px rgba(31,91,216,0.12);
+      }
+
+      .btnRow{
+        display:flex;
+        justify-content:center;
+        margin-top: 14px;
+      }
+      .btn{
+        height:56px;
+        border-radius:14px;
+        border: 1px solid rgba(15,23,42,0.08);
+        background: var(--blue);
+        color:#fff;
+        font-weight:800;
+        font-size:16px;
+        cursor:pointer;
+
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        text-align:center;
+        line-height:1;
+      }
+      .btn:disabled{
+        opacity:.55;
+        cursor:not-allowed;
+      }
+
+      .choiceGrid{
+        display:grid;
+        grid-template-columns: 1fr;
+        gap:12px;
+        margin: 0 auto;
+      }
+      @media (min-width: 740px){
+        .choiceGrid{ grid-template-columns: 1fr 1fr; }
+      }
+      .choiceBtn{
+        height:56px;
+        border-radius:14px;
+        border: 1px solid rgba(100,116,139,0.35);
+        background:#fff;
+        font-weight:800;
+        font-size:16px;
+        cursor:pointer;
+        width:100%;
+      }
+      .choiceBtn:hover{
+        border-color: rgba(31,91,216,0.55);
+        box-shadow: 0 0 0 4px rgba(31,91,216,0.10);
+      }
+
+      .agentRow{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:12px;
+        margin-top: 12px;
+        margin-bottom: 6px;
+        color: var(--muted);
+        font-weight:700;
+        font-size:14px;
+      }
+      .agentPic{
+        width:57px;
+        height:57px;
+        border-radius:999px;
+        overflow:hidden;
+        border:none;
+        background:#e5e7eb;
+        flex: 0 0 auto;
+      }
+      .agentPic img{
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        display:block;
+      }
+
+      .error{
+        text-align:center;
+        margin-top: 10px;
+        color:#dc2626;
+        font-weight:800;
+        display:none;
+      }
+
+      .tsWrap{
+        display:flex;
+        justify-content:center;
+        margin-top: 14px;
+        min-height: 68px;
+      }
+
+      .tcpaShort{
+        width: min(var(--inputW), 100%);
+        margin: 12px auto 0;
+        text-align:center;
+        color:#475569;
+        font-weight:700;
+        font-size:13px;
+        line-height:1.35;
+      }
+
+      .consentBox{
+        width: min(var(--inputW), 100%);
+        margin: 18px auto 0;
+        border: 1px solid rgba(15,23,42,0.10);
+        background: #f8fafc;
+        border-radius: 14px;
+        padding: 14px 16px;
+        color:#334155;
+      }
+      .consentTitle{
+        font-weight:900;
+        margin: 0 0 8px;
+        font-size:13px;
+        letter-spacing: .01em;
+        text-align:center;
+      }
+      .consentText{
+        margin:0;
+        font-size:12.5px;
+        line-height:1.45;
+        font-weight:650;
+      }
+
+      .belowTile{
+        width: min(980px, 100%);
+        margin: 22px auto 0;
+        text-align:center;
+      }
+      .carrierTitle{
+        color:#0f172a;
+        font-weight:800;
+        font-size:13px;
+        margin-bottom: 10px;
+      }
+      .carriers{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        flex-wrap:wrap;
+        gap:22px;
+        padding-bottom: 10px;
+      }
+      .carriers img{
+        height: 26px;
+        width:auto;
+        opacity: .95;
+      }
+      .footerLinks{
+        margin-top: 10px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(15,23,42,0.08);
+        display:flex;
+        gap:18px;
+        justify-content:center;
+        flex-wrap:wrap;
+        font-size:13px;
+        font-weight:800;
+      }
+      .footerLinks a{
+        color:#2563eb;
+        text-decoration:none;
+      }
+      .footerLinks a:hover{ text-decoration:underline; }
+ 
+/* ---------- Mobile polish ---------- */
+@media (max-width: 640px) {
+  /* keep everything from overflowing sideways */
+  html, body { width: 100%; overflow-x: hidden; }
+
+  /* page padding */
+  .container, .page, main { padding-left: 16px !important; padding-right: 16px !important; }
+
+  /* the “card” / form panel should be full-width on mobile */
+  .card, .panel, .form-card, .question-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 16px !important;
+  }
+
+  /* headings + input sizing */
+  h1, .title, .question-title { font-size: 34px !important; line-height: 1.1 !important; }
+  h2, .subtitle { font-size: 16px !important; }
+
+  input, select, textarea, button {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* top header: stop crowding */
+  header, .header, .topbar {
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+  .header-right, .topbar-right { margin-left: 0 !important; }
+
+  /* phone button shouldn’t push layout */
+  .phone-pill, .phone, .call-button {
+    width: auto !important;
+    max-width: 100% !important;
+    white-space: nowrap !important;
+  }
+
+  /* consent box spacing */
+  .consent, .consent-box, .legal, .terms-box {
+    padding: 14px !important;
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+  }
+
+  /* carrier logos wrap cleanly */
+  .logos, .carrier-logos {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 14px !important;
+  }
+  .logos img, .carrier-logos img {
+    height: 18px !important;
+    width: auto !important;
+  }
+}
+    </style>
+  </head>
+
+  <body>
+    <div class="topbar">
+      <div class="brand">
+        <div class="brandMark">GT</div>
+        <div>Great Trucking Insurance</div>
+      </div>
+
+      <div class="topRight">
+        <div>Licensed agents • Multiple markets</div>
+        <div class="phonePill">
+          <img
+            alt="phone"
+            src="https://static.wixstatic.com/media/430b26_f3c835b08a8a4af9aa29730225aa4454~mv2.png"
+          />
+          <span>(813) 761-8881</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div class="tile">
+        <div class="progressRow">
+          <div class="progressTrack"><div id="progressBar" class="progressBar"></div></div>
+          <div id="progressPct" class="progressPct">0%</div>
+        </div>
+
+        <div id="topLine" class="topLine">
+          Answer a few questions so we can route you to the right trucking insurance markets.
+        </div>
+
+        <div id="socialLine" class="socialLine" style="display:none;">
+          <span class="dot"></span>
+          <span id="socialText">Recently helped a trucking operator in Massachusetts.</span>
+        </div>
+
+        <h1 id="question" class="question">What’s your ZIP?</h1>
+
+        <div id="content"></div>
+        <div id="error" class="error">Enter a valid value.</div>
+      </div>
+
+      <div class="belowTile">
+        <div class="carrierTitle">Insurance carriers include</div>
+        <div class="carriers">
+          <img alt="The Hartford" src="https://static.wixstatic.com/media/430b26_dee7f56c00404ba5bfad46298ba8b24c~mv2.png" />
+          <img alt="Cover Whale" src="https://static.wixstatic.com/media/430b26_a665d64e4301401782acd10d30bc9600~mv2.png" />
+          <img alt="Nirvana" src="https://static.wixstatic.com/media/430b26_3eec5dcaaaae465ea6092bda467ec36c~mv2.png" />
+          <img alt="Progressive" src="https://static.wixstatic.com/media/430b26_65308353fd1743059698ea082d8cd8d2~mv2.png" />
+        </div>
+
+        <div class="footerLinks">
+          <a href="#" id="privacyLink">Privacy Policy</a>
+          <a href="#" id="tosLink">Terms of Use</a>
+          <a href="#" id="caLink">California Privacy Choices</a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      /* =========================
+         CONFIG
+      ========================= */
+      const TURNSTILE_SITE_KEY = "0x4AAAAAACKslkuXEKFaWbWC"; // <-- replace
+      const AGENT_PHOTO = "https://static.wixstatic.com/media/430b26_7f3b024a119441d5acb9d2a006716e5a~mv2.png";
+
+      // Will be updated after ZIP lookup
+      let SOCIAL_DEFAULT = "Recently helped a trucking operator in Massachusetts.";
+
+      // Will be loaded from /api/config (env var), but allow overrides
+      const runtime = {
+        smsMode: "off", // "on" | "off"
+      };
+
+      async function loadRuntimeConfig() {
+        // Highest priority: ?sms=on|off
+        const u = new URL(location.href);
+        const qs = u.searchParams.get("sms");
+        if (qs === "on" || qs === "off") {
+          runtime.smsMode = qs;
+          return;
+        }
+
+        // Next: localStorage override
+      const ls = localStorage.getItem("sms_mode") || localStorage.getItem("smsMode");
+        if (ls === "on" || ls === "off") {
+          runtime.smsMode = ls;
+          return;
+        }
+
+        // Finally: Cloudflare Pages env var via /api/config
+
+        try {
+          const res = await fetch("/api/config", { cache: "no-store" });
+          if (!res.ok) throw new Error("config not ok");
+          const data = await res.json();
+          const mode = String(data?.smsMode || "").toLowerCase().trim();
+          runtime.smsMode = (mode === "on") ? "on" : "off";
+        } catch {
+          runtime.smsMode = "off";
+        }
+      }
+
+      /* =========================
+         STATE + STEPS
+      ========================= */
+      const state = {
+        zip: "",
+        zipState: "", // e.g. "Ohio"
+        truckingType: "",
+        insuranceStatus: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        turnstileToken: null
+      };
+
+      const steps = [
+        { key: "zip", pct: 0, question: "What’s your ZIP?", agent: "We only ask what we need.", showSocial:false },
+        { key: "truckingType", pct: 25, question: "What type of trucking?", agent: "This helps us match you with markets that fit your operation.", showSocial:true },
+        { key: "insuranceStatus", pct: 50, question: "Do you have insurance now?", agent: "This helps determine which markets are available.", showSocial:true },
+        { key: "name", pct: 75, question: "What is your name?", agent: "A Licensed agent will follow-up.", showSocial:true },
+        { key: "email", pct: 85, question: "What’s your email?", agent: "We use email to share options and follow up. No Spam.", showSocial:true },
+        { key: "phone", pct: 100, question: "What is your phone number?", agent: "Your information is secure.", showSocial:true }
+      ];
+
+      let currentIdx = 0;
+      let turnstileWidgetId = null;
+
+      function $(id){ return document.getElementById(id); }
+
+      function setError(msg){
+        const el = $("error");
+        if (!msg) { el.style.display = "none"; el.textContent = ""; return; }
+        el.style.display = "block";
+        el.textContent = msg;
+      }
+
+      function setProgress(pct){
+        $("progressBar").style.width = `${pct}%`;
+        $("progressPct").textContent = `${pct}%`;
+      }
+
+      function setHeaderForStep(step){
+        $("question").textContent = step.question;
+
+        if (step.key === "zip") {
+          $("topLine").style.display = "block";
+          $("socialLine").style.display = "none";
+        } else {
+          $("topLine").style.display = "none";
+          $("socialLine").style.display = "flex";
+          $("socialText").textContent = SOCIAL_DEFAULT;
+        }
+      }
+
+      function pushHistory(idx){
+        const url = new URL(location.href);
+        url.searchParams.set("step", String(idx));
+        history.pushState({ idx }, "", url);
+      }
+
+      function replaceHistory(idx){
+        const url = new URL(location.href);
+        url.searchParams.set("step", String(idx));
+        history.replaceState({ idx }, "", url);
+      }
+
+      function goTo(idx, { fromPop=false } = {}){
+        currentIdx = Math.max(0, Math.min(idx, steps.length - 1));
+        const step = steps[currentIdx];
+
+        setProgress(step.pct);
+        setHeaderForStep(step);
+        setError("");
+
+        renderStep(step);
+
+        if (!fromPop) pushHistory(currentIdx);
+      }
+
+      function next(){
+        if (currentIdx < steps.length - 1) goTo(currentIdx + 1);
+      }
+
+      window.addEventListener("popstate", (e) => {
+        const idx = (e.state && typeof e.state.idx === "number") ? e.state.idx : 0;
+        goTo(idx, { fromPop:true });
+      });
+
+      /* =========================
+         TURNSTILE
+      ========================= */
+      function mountTurnstile(container){
+        state.turnstileToken = null;
+        if (!container) return;
+
+        container.innerHTML = `<div id="ts"></div>`;
+        const slot = container.querySelector("#ts");
+
+        function render(){
+          if (!window.turnstile || !slot) return;
+          if (turnstileWidgetId !== null) {
+            try { window.turnstile.remove(turnstileWidgetId); } catch {}
+            turnstileWidgetId = null;
+          }
+          turnstileWidgetId = window.turnstile.render(slot, {
+            sitekey: TURNSTILE_SITE_KEY,
+            callback: (token) => { state.turnstileToken = token; },
+            "expired-callback": () => { state.turnstileToken = null; },
+            "error-callback": () => { state.turnstileToken = null; }
+          });
+        }
+
+        const t = setInterval(() => {
+          if (window.turnstile) { clearInterval(t); render(); }
+        }, 80);
+      }
+
+      /* =========================
+         ZIP LOOKUP (zippopotam.us)
+      ========================= */
+      async function lookupZipState(zip){
+        // US ZIP lookup; returns "Ohio" etc, or "" if unavailable
+        try {
+          const res = await fetch(`https://api.zippopotam.us/us/${encodeURIComponent(zip)}`, { cache: "no-store" });
+          if (!res.ok) return "";
+          const data = await res.json();
+          const place = Array.isArray(data?.places) ? data.places[0] : null;
+          return String(place?.state || "").trim();
+        } catch {
+          return "";
+        }
+      }
+
+      /* =========================
+         RENDER STEPS
+      ========================= */
+      function renderStep(step){
+        const c = $("content");
+        c.innerHTML = "";
+
+        if (step.key === "zip") return renderZip(c);
+        if (step.key === "truckingType") return renderTruckingType(c);
+        if (step.key === "insuranceStatus") return renderInsuranceStatus(c);
+        if (step.key === "name") return renderName(c);
+        if (step.key === "email") return renderEmail(c);
+        if (step.key === "phone") return renderPhone(c);
+      }
+
+      function renderAgentLine(text){
+        const wrap = document.createElement("div");
+        wrap.className = "agentRow";
+        wrap.innerHTML = `
+          <div class="agentPic"><img alt="agent" src="${AGENT_PHOTO}"></div>
+          <div>${escapeHtml(text)}</div>
+        `;
+        return wrap;
+      }
+
+      function renderZip(c){
+        const inputWrap = document.createElement("div");
+        inputWrap.className = "inputWrap";
+        inputWrap.innerHTML = `
+          <input id="zipInput" inputmode="numeric" maxlength="5" placeholder="e.g., 02118" value="${escapeAttr(state.zip)}" />
+        `;
+        c.appendChild(inputWrap);
+
+        const btnRow = document.createElement("div");
+        btnRow.className = "btnRow";
+        btnRow.innerHTML = `<button id="zipContinue" class="btn" type="button">Continue</button>`;
+        c.appendChild(btnRow);
+
+        const ts = document.createElement("div");
+        ts.className = "tsWrap";
+        c.appendChild(ts);
+        mountTurnstile(ts);
+
+        c.appendChild(renderAgentLine(steps[currentIdx].agent));
+
+        const zipInput = $("zipInput");
+        const btn = $("zipContinue");
+        zipInput.focus();
+
+        function validateZip(z){
+          return /^\d{5}$/.test(z);
+        }
+
+        async function onContinue(){
+          const z = zipInput.value.trim();
+          if (!validateZip(z)) return setError("Enter a 5-digit ZIP.");
+          if (!state.turnstileToken) return setError("Please complete the verification.");
+
+          btn.disabled = true;
+          btn.textContent = "Checking…";
+
+          state.zip = z;
+          state.zipState = await lookupZipState(z);
+
+          // Update social proof text for subsequent steps
+          if (state.zipState) {
+            SOCIAL_DEFAULT = `Recently helped a trucking operator in ${state.zipState}.`;
+          } else {
+            SOCIAL_DEFAULT = "Recently helped a trucking operator in Massachusetts.";
+          }
+
+          btn.disabled = false;
+          btn.textContent = "Continue";
+
+          next();
+        }
+
+        btn.addEventListener("click", onContinue);
+        zipInput.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") onContinue();
+        });
+      }
+
+      function renderTruckingType(c){
+        const grid = document.createElement("div");
+        grid.className = "choiceGrid";
+        grid.innerHTML = `
+          <button class="choiceBtn" type="button" data-val="Owner Operator">Owner Operator</button>
+          <button class="choiceBtn" type="button" data-val="Small Fleet">Small Fleet</button>
+          <button class="choiceBtn" type="button" data-val="New Venture">New Venture</button>
+          <button class="choiceBtn" type="button" data-val="Other">Other</button>
+        `;
+        c.appendChild(grid);
+        c.appendChild(renderAgentLine(steps[currentIdx].agent));
+
+        grid.querySelectorAll("button").forEach((b) => {
+          b.addEventListener("click", () => {
+            state.truckingType = b.getAttribute("data-val") || "";
+            next();
+          });
+        });
+      }
+
+      function renderInsuranceStatus(c){
+        const grid = document.createElement("div");
+        grid.className = "choiceGrid";
+        grid.innerHTML = `
+          <button class="choiceBtn" type="button" data-val="Yes">Yes</button>
+          <button class="choiceBtn" type="button" data-val="No">No</button>
+          <button class="choiceBtn" type="button" data-val="Lapsed / Cancelled">Lapsed / Cancelled</button>
+          <button class="choiceBtn" type="button" data-val="Not sure">Not sure</button>
+        `;
+        c.appendChild(grid);
+        c.appendChild(renderAgentLine(steps[currentIdx].agent));
+
+        grid.querySelectorAll("button").forEach((b) => {
+          b.addEventListener("click", () => {
+            state.insuranceStatus = b.getAttribute("data-val") || "";
+            next();
+          });
+        });
+      }
+
+      function renderName(c){
+        const inputWrap = document.createElement("div");
+        inputWrap.className = "inputWrap";
+        inputWrap.style.flexDirection = "column";
+        inputWrap.style.gap = "12px";
+        inputWrap.innerHTML = `
+          <div style="display:flex; flex-direction:column; gap:12px; width:min(var(--inputW), 100%); margin:0 auto;">
+            <input id="firstName" placeholder="First name" value="${escapeAttr(state.firstName)}" autocomplete="given-name" />
+            <input id="lastName" placeholder="Last name" value="${escapeAttr(state.lastName)}" autocomplete="family-name" />
+          </div>
+        `;
+        c.appendChild(inputWrap);
+
+        const btnRow = document.createElement("div");
+        btnRow.className = "btnRow";
+        btnRow.innerHTML = `<button id="nameContinue" class="btn" type="button">Continue</button>`;
+        c.appendChild(btnRow);
+
+        c.appendChild(renderAgentLine(steps[currentIdx].agent));
+        $("firstName").focus();
+
+        function ok(){
+          const fn = $("firstName").value.trim();
+          const ln = $("lastName").value.trim();
+          if (!fn || !ln) return setError("Enter first and last name.");
+          state.firstName = fn; state.lastName = ln;
+          next();
+        }
+
+        $("nameContinue").addEventListener("click", ok);
+        $("lastName").addEventListener("keydown", (e)=>{ if(e.key==="Enter") ok(); });
+        $("firstName").addEventListener("keydown", (e)=>{ if(e.key==="Enter") ok(); });
+      }
+
+      function renderEmail(c){
+        const inputWrap = document.createElement("div");
+        inputWrap.className = "inputWrap";
+        inputWrap.innerHTML = `
+          <input id="emailInput" inputmode="email" placeholder="name@email.com" value="${escapeAttr(state.email)}" autocomplete="email" />
+        `;
+        c.appendChild(inputWrap);
+
+        const btnRow = document.createElement("div");
+        btnRow.className = "btnRow";
+        btnRow.innerHTML = `<button id="emailContinue" class="btn" type="button">Continue</button>`;
+        c.appendChild(btnRow);
+
+        c.appendChild(renderAgentLine(steps[currentIdx].agent));
+        $("emailInput").focus();
+
+        function validEmail(s){
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
+        }
+
+        function ok(){
+          const em = $("emailInput").value.trim();
+          if (!validEmail(em)) return setError("Enter a valid email.");
+          state.email = em;
+          next();
+        }
+
+        $("emailContinue").addEventListener("click", ok);
+        $("emailInput").addEventListener("keydown", (e)=>{ if(e.key==="Enter") ok(); });
+      }
+
+      function renderPhone(c){
+  const inputWrap = document.createElement("div");
+  inputWrap.className = "inputWrap";
+  inputWrap.innerHTML = `
+    <input id="phoneInput" inputmode="tel" placeholder="(###) ###-####" value="${escapeAttr(state.phone)}" autocomplete="tel" />
+  `;
+  c.appendChild(inputWrap);
+
+  const shortLine = document.createElement("div");
+  shortLine.className = "tcpaShort";
+  c.appendChild(shortLine);
+
+  const btnRow = document.createElement("div");
+  btnRow.className = "btnRow";
+  btnRow.innerHTML = `
+    <button
+      id="finalBtn"
+      class="btn consent-confirmation-form-submit"
+      type="button"
+      disabled
+    >
+      Request My Options
+    </button>
+  `;
+  c.appendChild(btnRow);
+
+  const box = document.createElement("div");
+  box.className = "consentBox consent-confirmation-tcpa-disclosure";
+  c.appendChild(box);
+
+  c.appendChild(renderAgentLine(steps[currentIdx].agent));
+
+  const ts = document.createElement("div");
+  ts.className = "tsWrap";
+  c.appendChild(ts);
+  mountTurnstile(ts);
+
+  const btn = $("finalBtn");
+  const phoneInput = $("phoneInput");
+  phoneInput.focus();
+
+  function parseUSPhone(raw) {
+    const lib = window.libphonenumber;
+    if (!lib || typeof lib.parsePhoneNumberFromString !== "function") return null;
+
+    const p = lib.parsePhoneNumberFromString(String(raw || ""), "US");
+    if (!p) return null;
+
+    if (!p.isPossible() || !p.isValid()) return null;
+    if (p.country !== "US") return null;
+
+    const d10 = String(p.nationalNumber || "");
+    if (!/^\d{10}$/.test(d10)) return null;
+
+    // cheap junk filters
+    if (
+      /^(\d)\1{9}$/.test(d10) ||
+      d10 === "1234567890" ||
+      d10 === "0123456789" ||
+      d10 === "9876543210" ||
+      d10.startsWith("555")
+    ) {
+      return null;
+    }
+
+    return { e164: p.number, d10 };
+  }
+
+  function validateLocal() {
+    const parsed = parseUSPhone(phoneInput.value);
+    if (!parsed) return { ok: false, msg: "Enter a valid US phone number." };
+    return { ok: true, d10: parsed.d10 };
+  }
+
+  function setUiForMode(){
+    const mode = String(runtime.smsMode || "off").toLowerCase().trim(); // "on" | "off"
+
+    if (mode === "on") {
+      btn.textContent = "Get Link On Phone";
+      shortLine.textContent =
+        'By clicking the "Get Link On Phone" button, I provide my electronic signature, agree to the terms below. Mobile Alerts: Sales, Specials, and News. Frequency may vary. Msg & Data rates may apply. Text STOP to cancel. Text HELP for more information.';
+      box.innerHTML = `
+        <div class="consentTitle">Consent &amp; Authorization</div>
+        <p class="consentText">
+          By clicking the "Get Link On Phone" button, I provide my written consent to agents or businesses to contact me for marketing/telemarketing purposes at the number I have provided above, using live operators, automated technology, artificial and/or AI generated voice or pre-recorded messages, SMS/MMS text messages, and/or emails, if applicable, even if I have previously registered the provided number on a company and/or any Federal or State Do Not Call Registry. I understand that my consent is not a condition of purchasing goods or services. I acknowledge that to be connected with product sellers that can fit my needs without providing this consent, I can call 813-761-8881.
+        </p>
+      `;
+      return;
+    }
+
+    // mode === "off"
+    btn.textContent = "Request My Options";
+    shortLine.textContent =
+      'By clicking "Request My Options", you agree to the terms below. A licensed agent may contact you by phone or email.';
+    box.innerHTML = `
+      <div class="consentTitle">Consent &amp; Authorization</div>
+      <p class="consentText">
+        By clicking "Request My Options", I provide my written consent to agents or businesses to contact me for marketing/telemarketing purposes at the number I have provided above, using live operators, automated technology, artificial and/or AI generated voice or pre-recorded messages, and/or emails, if applicable, even if I have previously registered the provided number on a company and/or any Federal or State Do Not Call Registry. I understand that my consent is not a condition of purchasing goods or services. I acknowledge that to be connected with product sellers that can fit my needs without providing this consent, I can call 813-761-8881.
+      </p>
+    `;
+  }
+
+  // enable/disable button based on local phone validity only
+  function refreshButtonState(){
+    const v = validateLocal();
+    btn.disabled = !v.ok;
+    if (v.ok) setError("");
+  }
+
+  phoneInput.addEventListener("input", () => {
+    state.phone = phoneInput.value.trim();
+    refreshButtonState();
+  });
+
+  phoneInput.addEventListener("keydown", (e)=>{
+    if (e.key === "Enter") btn.click();
+  });
+
+  async function handleFinal(){
+    const v = validateLocal();
+    if (!v.ok) return setError(v.msg);
+
+    // Turnstile is required only at submit time
+    if (!state.turnstileToken) {
+      return setError("Please complete the verification.");
+    }
+
+    let j = null;
+    try {
+      const res = await fetch("/api/send-link", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          phone: v.d10,
+          link: window.location.href,
+          turnstileToken: state.turnstileToken,
+          dryRun: false
+        })
+      });
+
+      j = await res.json().catch(() => null);
+
+      if (!res.ok || !j || j.ok !== true) {
+        const err = String(j?.error || "");
+        if (err.toLowerCase().includes("turnstile")) {
+          return setError("Please complete the verification.");
+        }
+        // Keep your desired copy for all phone rejects
+        return setError("Enter valid phone number.");
+      }
+    } catch {
+      return setError("Enter valid phone number.");
+    }
+
+    const smsWasSent = (j.sms === "sent");
+
+    // Intent is what the UI offered based on SMS_MODE (not line type)
+    const smsIntent = (String(runtime.smsMode || "off").toLowerCase().trim() === "on");
+
+    const smsSkippedReason =
+      smsWasSent ? "" : (smsIntent ? "non_mobile" : "sms_mode_off");
+
+    const leadPayload = {
+      funnel: "truckingform",
+      zip: state.zip || "",
+      state: state.zipState || "",
+      trucking_type: state.truckingType || "",
+      insured: state.insuranceStatus || "",
+      firstname: state.firstName || "",
+      lastname: state.lastName || "",
+      email: state.email || "",
+      phone: v.d10,
+
+      phone_verified: true,
+      phone_line_type: String(j.lineType || "").trim(),
+
+      sms_intent: smsIntent,
+      sms_link_sent: smsWasSent,
+      sms_skipped_reason: smsSkippedReason,
+      sms_link_clicked: false,
+      sms_error: "",
+
+      source_url: window.location.href,
+      contact_source: "truckingform",
+    };
+
+    try {
+      const leadRes = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(leadPayload),
+      });
+
+      if (!leadRes.ok) {
+        return setError("Lead submit failed.");
+      }
+    } catch {
+      return setError("Lead submit failed.");
+    }
+
+window.location.href = smsWasSent ? "/get-quote/thanks.html?m=sms" : "/get-quote/thanks.html";
+  }
+
+  btn.addEventListener("click", handleFinal);
+
+  // init UI
+  setUiForMode();
+  refreshButtonState();
+}
+      function escapeHtml(s){
+        return String(s || "")
+          .replaceAll("&","&amp;")
+          .replaceAll("<","&lt;")
+          .replaceAll(">","&gt;")
+          .replaceAll('"',"&quot;")
+          .replaceAll("'","&#039;");
+      }
+      function escapeAttr(s){
+        return escapeHtml(s).replaceAll("\n"," ");
+      }
+
+      /* =========================
+         INIT
+      ========================= */
+      (async function init(){
+        await loadRuntimeConfig();
+
+        const u = new URL(location.href);
+        const idx = Math.max(0, Math.min(parseInt(u.searchParams.get("step") || "0", 10) || 0, steps.length - 1));
+        replaceHistory(idx);
+        goTo(idx);
+      })();
+    </script>
+  </body>
+</html>
