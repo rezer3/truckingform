@@ -5,20 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Great Trucking Insurance</title>
 
-    <!-- CertifiedConnection (ConsentConfirmation) -->
-    <script>
-      (function () {
-        var s = document.createElement("script");
-        s.id = "xxConsentConfirmationxx";
-        if (document.getElementById("xxConsentConfirmationxx")) return;
-        s.type = "text/javascript";
-        s.async = true;
-        s.src = "https://cdn.consentconfirmation.com/bundle-prod.js";
-        var ss = document.getElementsByTagName("script")[0];
-        ss.parentNode.insertBefore(s, ss);
-        window.xxConsentConfirmationTokenxx = "96c2db583993420ebd2cdd7d5538ffb8"; // <-- replace
-      })();
-    </script>
+   <!-- CertifiedConnection (ConsentConfirmation) -->
+<script>
+  (function () {
+    // Set token FIRST (prevents race condition)
+    window.xxConsentConfirmationTokenxx = "96c2db583993420ebd2cdd7d5538ffb8";
+
+    if (document.getElementById("xxConsentConfirmationxx")) return;
+
+    var s = document.createElement("script");
+    s.id = "xxConsentConfirmationxx";
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = "https://cdn.consentconfirmation.com/bundle-prod.js";
+
+    var ss = document.getElementsByTagName("script")[0];
+    ss.parentNode.insertBefore(s, ss);
+  })();
+</script>
 
     <!-- Turnstile -->
     <script
@@ -938,7 +942,7 @@
     if (mode === "on") {
       btn.textContent = "Get Link On Phone";
       shortLine.textContent =
-        'By clicking the "Get Link On Phone" button, I provide my electronic signature, agree to the terms below. Mobile Alerts: Sales, Specials, and News. Frequency may vary. Msg & Data rates may apply. Text STOP to cancel. Text HELP for more information.';
+        'By clicking the "Get Link On Phone" button, I provide my electronic signature, agree to the below terms and being contacted for marketing purposes. MSG & Data rates may apply. Frequency may vary. Reply HELP for help; STOP to opt-out.';
       box.innerHTML = `
         <div class="consentTitle">Consent &amp; Authorization</div>
         <p class="consentText">
@@ -951,7 +955,7 @@
     // mode === "off"
     btn.textContent = "Request My Options";
     shortLine.textContent =
-      'By clicking "Request My Options", you agree to the terms below. A licensed agent may contact you by phone or email.';
+      'By clicking the "Request My Options" button, I provide my electronic signature, agree to the below terms and being contacted for marketing purposes. MSG & Data rates may apply. Frequency may vary. Reply HELP for help; STOP to opt-out.';
     box.innerHTML = `
       <div class="consentTitle">Consent &amp; Authorization</div>
       <p class="consentText">
