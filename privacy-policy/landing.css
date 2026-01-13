@@ -14,7 +14,8 @@
   --gt-shadow-2: 0 6px 18px rgba(16, 24, 40, 0.10);
   --gt-radius: 18px;
 }
-
+/* Prevent padding/border from causing overflow on small screens */
+*, *::before, *::after { box-sizing: border-box; }
 /* Base */
 .gt-wrap{
   margin: 0;
@@ -266,7 +267,7 @@ a{ color: inherit; }
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  width: min(240px, 100%);
+  width: min(340px, 100%);
   padding: 14px 18px;
   border-radius: 12px;
   background: linear-gradient(#ffe07a, #ffbf00);
@@ -436,6 +437,7 @@ a{ color: inherit; }
   .gt-grid{ grid-template-columns: 1fr; }
   .gt-side{ position: static; }
   .gt-featuregrid{ grid-template-columns: 1fr; }
+  .gt-next{ width: 100%; max-width: 100%; }
 }
 
 @media (max-width: 520px){
