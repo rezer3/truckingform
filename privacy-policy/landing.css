@@ -216,6 +216,7 @@ a{ color: inherit; }
   border-radius: var(--gt-radius);
   box-shadow: var(--gt-shadow);
   padding: 26px;
+   overflow: hidden; /* clips the button + shadow so it can’t spill past the rounded corners */
 }
 
 .gt-card h2{
