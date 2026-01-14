@@ -3,16 +3,17 @@
  * https://developers.cloudflare.com/workers/wrangler/configuration/
  */
 {
-	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "greattruckinginsurance-geo",
-	"main": "src/index.js",
-	"compatibility_date": "2025-09-27",
-	"routes": [
-  "greattruckinginsurance.com/api/geo*"
-],
-	"observability": {
-		"enabled": true
-	}
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "greattruckinginsurance-geo",
+  "main": "src/index.js",
+  "compatibility_date": "2025-09-27",
+  "routes": [
+    "greattruckinginsurance.com/api/geo*"
+  ],
+  "observability": {
+    "enabled": true
+  }
+
 	/**
 	 * Smart Placement
 	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
