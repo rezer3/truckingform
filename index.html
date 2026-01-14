@@ -25,7 +25,6 @@
 
   gtag('config', 'AW-17807584395');
 </script>
-<head>
   <link rel="stylesheet" href="landing.css">
   <style>
     .gt-zipbar{ display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
@@ -78,7 +77,27 @@
   <button class="gt-cta" type="submit">GET A QUOTE</button>
 </form>
 <div class="gt-cta-sub">Takes a few minutes.</div>
+<script>
+  (function () {
+    const input = document.getElementById("zipInput");
+    if (!input) return;
 
+    // If the user already typed, do not overwrite
+    const userHasTyped = () => (input.value || "").trim().length > 0;
+
+    fetch("/api/geo", { cache: "no-store" })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (!data || userHasTyped()) return;
+
+        const z = String(data.postalCode || "").trim();
+        if (/^\d{5}$/.test(z)) {
+          input.value = z;
+        }
+      })
+      .catch(() => {});
+  })();
+</script>
         <div class="gt-icons">
           <div class="gt-icon">
             <img src="/assets/icon-ownerop.svg" alt="" aria-hidden="true" />
