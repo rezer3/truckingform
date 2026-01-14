@@ -47,8 +47,21 @@
         <h1>Get Trucking Insurance Quotes Fast.</h1>
         <p>Compare options from multiple trucking insurers in minutes.</p>
 
-        <a class="gt-cta" href="/get-quote/">GET A QUOTE</a>
-        <div class="gt-cta-sub">Takes a few minutes.</div>
+     <form class="gt-zipbar" id="zipBar" action="/get-quote/" method="GET">
+  <input
+    class="gt-zip"
+    id="zipInput"
+    name="zip"
+    inputmode="numeric"
+    maxlength="5"
+    placeholder="ZIP code"
+    aria-label="ZIP code"
+    required
+  />
+  <input type="hidden" name="step" value="1" />
+  <button class="gt-cta" type="submit">GET A QUOTE</button>
+</form>
+<div class="gt-cta-sub">Takes a few minutes.</div>
 
         <div class="gt-icons">
           <div class="gt-icon">
@@ -176,5 +189,24 @@
   </footer>
   <!-- TWIPLA Tracking Code for greattruckinginsurance.com --><script>(function(v,i,s,a,t){v[t]=v[t]||function(){(v[t].v=v[t].v||[]).push(arguments)};if(!v._visaSettings){v._visaSettings={}}v._visaSettings[a]={v:'1.0',s:a,a:'1',t:t};var b=i.getElementsByTagName('body')[0];var p=i.createElement('script');p.defer=1;p.async=1;p.src=s+'?s='+a;b.appendChild(p)})(window,document,'//app-worker.visitor-analytics.io/main.js','62b41dbf-ef2f-11f0-84e1-960004340fd3','va')</script><!-- TWIPLA Tracking Code for greattruckinginsurance.com -->
 <script type="text/javascript" src="//cdn.dni.nimbata.com/65647072129.min.js"></script>
+<script>
+  (function () {
+    const form = document.getElementById("zipBar");
+    const input = document.getElementById("zipInput");
+    if (!form || !input) return;
+
+    input.addEventListener("input", () => {
+      input.value = input.value.replace(/\D/g, "").slice(0, 5);
+    });
+
+    form.addEventListener("submit", (e) => {
+      const z = (input.value || "").trim();
+      if (!/^\d{5}$/.test(z)) {
+        e.preventDefault();
+        input.focus();
+      }
+    });
+  })();
+</script>
 </body>
 </html>

@@ -1102,14 +1102,42 @@ window.location.href = smsWasSent ? "/get-quote/thanks.html?m=sms" : "/get-quote
       /* =========================
          INIT
       ========================= */
-      (async function init(){
-        await loadRuntimeConfig();
+   (async function init(){
+  await loadRuntimeConfig();
 
-        const u = new URL(location.href);
-        const idx = Math.max(0, Math.min(parseInt(u.searchParams.get("step") || "0", 10) || 0, steps.length - 1));
-        replaceHistory(idx);
-        goTo(idx);
-      })();
+  const u = new URL(location.href);
+
+  // 1) Optional: accept ZIP passed from landing page
+  const zipFromQs = (u.searchParams.get("zip") || "").trim();
+  const hasValidZip = /^\d{5}$/.test(zipFromQs);
+
+  if (hasValidZip) {
+    state.zip = zipFromQs;
+
+    // Populate zipState + social proof text (same as ZIP step does)
+    state.zipState = await lookupZipState(zipFromQs);
+    if (state.zipState) {
+      SOCIAL_DEFAULT = `Recently helped a trucking operator in ${state.zipState}.`;
+    } else {
+      SOCIAL_DEFAULT = "Recently helped a trucking operator in Massachusetts.";
+    }
+
+    // Force start at "What type of trucking?" (step 1)
+    u.searchParams.set("step", "1");
+    history.replaceState({ idx: 1 }, "", u.toString());
+    replaceHistory(1);
+    goTo(1);
+    return;
+  }
+
+  // 2) Default behavior (no ZIP passed)
+  const idx = Math.max(
+    0,
+    Math.min(parseInt(u.searchParams.get("step") || "0", 10) || 0, steps.length - 1)
+  );
+  replaceHistory(idx);
+  goTo(idx);
+})();
     </script>
       <!-- TWIPLA Tracking Code for greattruckinginsurance.com --><script>(function(v,i,s,a,t){v[t]=v[t]||function(){(v[t].v=v[t].v||[]).push(arguments)};if(!v._visaSettings){v._visaSettings={}}v._visaSettings[a]={v:'1.0',s:a,a:'1',t:t};var b=i.getElementsByTagName('body')[0];var p=i.createElement('script');p.defer=1;p.async=1;p.src=s+'?s='+a;b.appendChild(p)})(window,document,'//app-worker.visitor-analytics.io/main.js','62b41dbf-ef2f-11f0-84e1-960004340fd3','va')</script><!-- TWIPLA Tracking Code for greattruckinginsurance.com -->
 <script type="text/javascript" src="//cdn.dni.nimbata.com/65647072129.min.js"></script>
