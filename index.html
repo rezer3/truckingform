@@ -48,6 +48,47 @@
   /* Push “Takes a few minutes.” away from the zip/button row */
   .gt-cta-sub{
     margin-top: 12px;
+    .carrier-wall {
+  background: #f8f9fb;
+  border-top: 1px solid rgba(0,0,0,0.04);
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  padding: 22px 16px;
+}
+
+.carrier-wall-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.carrier-label {
+  display: block;
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 14px;
+}
+
+.carrier-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.carrier-logos img {
+  height: 34px;
+  max-width: 120px;
+  object-fit: contain;
+  filter: grayscale(100%);
+  opacity: 0.65;
+}
+
+@media (max-width: 640px) {
+  .carrier-logos img {
+    height: 26px;
+  }
+}
   }
 </style>
 </head>
@@ -132,6 +173,21 @@
       </div>
     </div>
   </section>
+  <section class="carrier-wall">
+  <div class="carrier-wall-inner">
+    <span class="carrier-label">
+      Access to leading trucking insurance markets
+    </span>
+
+    <div class="carrier-logos">
+      <img src="https://static.wixstatic.com/media/430b26_a2d0fc0b6c0f4c5fb4254f575055bd0a~mv2.png" alt="">
+      <img src="https://static.wixstatic.com/media/430b26_dee7f56c00404ba5bfad46298ba8b24c~mv2.png" alt="">
+      <img src="https://static.wixstatic.com/media/430b26_65308353fd1743059698ea082d8cd8d2~mv2.png" alt="">
+      <img src="https://static.wixstatic.com/media/430b26_a665d64e4301401782acd10d30bc9600~mv2.png" alt="">
+      <img src="https://static.wixstatic.com/media/430b26_3eec5dcaaaae465ea6092bda467ec36c~mv2.png" alt="">
+    </div>
+  </div>
+</section>
 
   <main class="gt-main">
     <div class="gt-grid">
