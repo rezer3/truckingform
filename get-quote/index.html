@@ -1140,75 +1140,25 @@ window.location.href = smsWasSent ? "/get-quote/thanks.html?m=sms" : "/get-quote
 })();
     </script>
       <!-- TWIPLA Tracking Code for greattruckinginsurance.com --><script>(function(v,i,s,a,t){v[t]=v[t]||function(){(v[t].v=v[t].v||[]).push(arguments)};if(!v._visaSettings){v._visaSettings={}}v._visaSettings[a]={v:'1.0',s:a,a:'1',t:t};var b=i.getElementsByTagName('body')[0];var p=i.createElement('script');p.defer=1;p.async=1;p.src=s+'?s='+a;b.appendChild(p)})(window,document,'//app-worker.visitor-analytics.io/main.js','62b41dbf-ef2f-11f0-84e1-960004340fd3','va')</script><!-- TWIPLA Tracking Code for greattruckinginsurance.com -->
-  <!-- Hydra Recorder (rrweb) -->
+ <!-- Hydra Recorder (rrweb) -->
+<!-- rrweb (dependency) -->
 <script src="https://unpkg.com/rrweb@1.1.3/dist/rrweb.min.js"></script>
+
+<!-- Hydra loader -->
 <script>
+  window.HYDRA_CONFIG = {
+    ingest: "https://hydra.reez-beez.workers.dev/ingest",
+    idleMs: 120000
+  };
+
   (function () {
-    const HYDRA_INGEST = "https://hydra.reez-beez.workers.dev/ingest";
+    if (window.__hydraLoaderLoaded) return;
+    window.__hydraLoaderLoaded = true;
 
-    // Per-tab session id
-    const SESSION_KEY = "hydra_session_id";
-    let session_id = sessionStorage.getItem(SESSION_KEY);
-    if (!session_id) {
-      session_id = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + "-" + Math.random().toString(16).slice(2));
-      sessionStorage.setItem(SESSION_KEY, session_id);
-    }
-
-    // Make it easy to copy/paste for testing
-    window.HYDRA_SESSION_ID = session_id;
-    console.log("[Hydra] session_id:", session_id);
-
-    let started = false;
-    let buffer = [];
-    let flushTimer = null;
-
-    function meta() {
-      return { page: location.pathname, href: location.href };
-    }
-
-    async function flush() {
-      if (!buffer.length) return;
-      const events = buffer;
-      buffer = [];
-      try {
-        await fetch(HYDRA_INGEST, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          keepalive: true,
-          body: JSON.stringify({ session_id, events, meta: meta() })
-        });
-      } catch (_) {}
-    }
-
-    function scheduleFlush() {
-      if (flushTimer) return;
-      flushTimer = setTimeout(async () => {
-        flushTimer = null;
-        await flush();
-      }, 5000);
-    }
-
-    function startOnce() {
-      if (started) return;
-      started = true;
-
-      rrweb.record({
-        emit(event) {
-          buffer.push(event);
-          if (buffer.length >= 200) flush();
-          else scheduleFlush();
-        },
-        maskAllInputs: true
-      });
-
-      window.addEventListener("pagehide", flush, { capture: true });
-      window.addEventListener("beforeunload", flush, { capture: true });
-    }
-
-    // Delayed start: first real interaction
-    window.addEventListener("pointerdown", startOnce, { once: true, capture: true });
-    window.addEventListener("keydown", startOnce, { once: true, capture: true });
-    window.addEventListener("submit", startOnce, { once: true, capture: true });
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://hydraview.pages.dev/hydra-recorder.js?v=1";
+    document.head.appendChild(s);
   })();
 </script>
     </body>
