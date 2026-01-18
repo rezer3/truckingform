@@ -1,3 +1,4 @@
 
 # local secrets
 .dev.vars
+.DS_Store
