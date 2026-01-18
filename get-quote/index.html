@@ -727,6 +727,11 @@ function loadConsentConfirmationOnce() {
         btnRow.innerHTML = `<button id="zipContinue" class="btn" type="button">Continue</button>`;
         c.appendChild(btnRow);
 
+        const ts = document.createElement("div");
+        ts.className = "tsWrap";
+        c.appendChild(ts);
+        mountTurnstile(ts);
+
         c.appendChild(renderAgentLine(steps[currentIdx].agent));
 
         const zipInput = $("zipInput");
@@ -740,7 +745,8 @@ function loadConsentConfirmationOnce() {
         async function onContinue(){
           const z = zipInput.value.trim();
           if (!validateZip(z)) return setError("Enter a 5-digit ZIP.");
-   
+          if (!state.turnstileToken) return setError("Please complete the verification.");
+
           btn.disabled = true;
           btn.textContent = "Checking…";
 
@@ -897,17 +903,17 @@ function loadConsentConfirmationOnce() {
     </button>
   `;
   c.appendChild(btnRow);
+  
+  const ts = document.createElement("div");
+  ts.className = "tsWrap";
+  c.appendChild(ts);
+  mountTurnstile(ts);
 
   const box = document.createElement("div");
   box.className = "consentBox consent-confirmation-tcpa-disclosure";
   c.appendChild(box);
 
   c.appendChild(renderAgentLine(steps[currentIdx].agent));
-
-  const ts = document.createElement("div");
-  ts.className = "tsWrap";
-  c.appendChild(ts);
-  mountTurnstile(ts);
 
   const btn = $("finalBtn");
   const phoneInput = $("phoneInput");
@@ -994,12 +1000,10 @@ function loadConsentConfirmationOnce() {
     const v = validateLocal();
     if (!v.ok) return setError(v.msg);
 
-  // Turnstile is required only at submit time (token is single-use)
-const token = state.turnstileToken;
-if (!token) return setError("Please complete the verification.");
-
-// consume it so every click requires a fresh token
-state.turnstileToken = null;
+    // Turnstile is required only at submit time
+    if (!state.turnstileToken) {
+      return setError("Please complete the verification.");
+    }
 
     let j = null;
     try {
@@ -1009,7 +1013,7 @@ state.turnstileToken = null;
         body: JSON.stringify({
           phone: v.d10,
           link: window.location.href,
-          turnstileToken: token,
+          turnstileToken: state.turnstileToken,
           dryRun: false
         })
       });
@@ -1018,17 +1022,15 @@ state.turnstileToken = null;
 
       if (!res.ok || !j || j.ok !== true) {
         const err = String(j?.error || "");
-   if (err.toLowerCase().includes("turnstile")) {
-  try { window.turnstile?.reset(turnstileWidgetId); } catch {}
-  return setError("Please complete the verification.");
-}
+        if (err.toLowerCase().includes("turnstile")) {
+          return setError("Please complete the verification.");
+        }
         // Keep your desired copy for all phone rejects
         return setError("Enter valid phone number.");
       }
-} catch {
-  try { window.turnstile?.reset(turnstileWidgetId); } catch {}
-  return setError("Enter valid phone number.");
-}
+    } catch {
+      return setError("Enter valid phone number.");
+    }
 
     const smsWasSent = (j.sms === "sent");
 
