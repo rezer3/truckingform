@@ -136,7 +136,35 @@
   color:#e5e7eb;
   font-size:13px;
 }
+.gt-rating-text{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
 
+.gt-shield{
+  width:14px;
+  height:14px;
+  display:inline-block;
+  background: rgba(34,197,94,0.15);
+  border-radius:4px;
+  position:relative;
+}
+
+.gt-shield::before{
+  content:"";
+  position:absolute;
+  inset:3px;
+  background:#22c55e;
+  clip-path: polygon(
+    50% 0%,
+    100% 20%,
+    100% 65%,
+    50% 100%,
+    0% 65%,
+    0% 20%
+  );
+}
 .gt-avatars{
   display:flex;
 }
@@ -214,11 +242,12 @@
     <img src="assets/avatar-4.jpg" alt="" />
   </div>
 
-  <div class="gt-rating-text">
-    <div class="gt-rating-copy">
-      1,000,000+ clients insured by our partners
-    </div>
+<div class="gt-rating-text">
+  <span class="gt-shield" aria-hidden="true"></span>
+  <div class="gt-rating-copy">
+    1,000,000+ clients insured by our partners
   </div>
+</div>
 </div>
 <script>
   (function () {
