@@ -163,7 +163,29 @@
 .gt-rating-copy{
   opacity:0.9;
 }
+.gt-stars{
+  position: relative;
+  display: inline-block;
+  font-size: 14px;
+  line-height: 1;
+  color: #9ca3af; /* gray base stars */
+}
 
+.gt-stars::before{
+  content: "★★★★★";
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  color: #fbbf24; /* gold */
+  width: 0;
+}
+
+/* 4.6 out of 5 stars (≈ last star 60%) */
+.gt-stars-46::before{
+  width: 92%;
+}
 /* Mobile tightening */
 @media (max-width:640px){
   .gt-rating{
@@ -225,9 +247,9 @@
   </div>
 
   <div class="gt-rating-text">
-    <div class="gt-stars" aria-hidden="true">
-      ★★★★★
-    </div>
+<div class="gt-stars gt-stars-46" aria-hidden="true">
+  ★★★★★
+</div>
     <div class="gt-rating-copy">
       1,000,000+ clients insured by our partners
     </div>
