@@ -151,7 +151,6 @@
 .gt-shield{
   display:inline-flex;
   align-items:center;
-  justify-content:center;
   flex-shrink:0;
 }
 
@@ -161,12 +160,17 @@
   display:block;
 }
 
-.gt-shield-ico path:first-child{
-  fill:#e5e7eb; /* outer shield */
+/* Color scheme */
+.shield-outer{
+  fill:#1e3a8a; /* dark blue */
 }
 
-.gt-shield-ico path:last-child{
-  fill:#9ca3af; /* inner shield */
+.shield-inner{
+  fill:#3b82f6; /* lighter blue */
+}
+
+.shield-check{
+  fill:#ffffff; /* white checkmark */
 }
 .gt-avatars{
   display:flex;
@@ -249,11 +253,19 @@
   <div class="gt-rating-copy">
     1,000,000+ clients insured by our partners
 <span class="gt-shield" aria-hidden="true">
-  <svg viewBox="0 0 24 24" class="gt-shield-ico" focusable="false" aria-hidden="true">
-    <path d="M12 2.5 20 6v6.6c0 5.2-3.4 9.2-8 11-4.6-1.8-8-5.8-8-11V6l8-3.5Z"/>
-    <path d="M12 5.2 17.8 7.8v4.9c0 4-2.4 7.1-5.8 8.7-3.4-1.6-5.8-4.7-5.8-8.7V7.8L12 5.2Z"/>
-  </svg>
-</span>
+<svg viewBox="0 0 24 24" class="gt-shield-ico" aria-hidden="true">
+  <!-- Outer shield -->
+  <path class="shield-outer"
+    d="M12 2.5 20 6v6.6c0 5.2-3.4 9.2-8 11-4.6-1.8-8-5.8-8-11V6l8-3.5Z"/>
+
+  <!-- Inner shield -->
+  <path class="shield-inner"
+    d="M12 5.4 17.4 7.7v4.8c0 3.8-2.3 6.7-5.4 8.1-3.1-1.4-5.4-4.3-5.4-8.1V7.7L12 5.4Z"/>
+
+  <!-- Checkmark -->
+  <path class="shield-check"
+    d="M10.2 13.9 8.3 12l-1.2 1.2 3.1 3.1 6.1-6.1-1.2-1.2-5.1 5.1Z"/>
+</svg>
   </div>
 </div>
 </div>
