@@ -128,7 +128,53 @@
   align-items: center;
   gap: 8px;
 }
+.gt-rating{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-top:10px;
+  color:#e5e7eb;
+  font-size:13px;
+}
 
+.gt-avatars{
+  display:flex;
+}
+
+.gt-avatars img{
+  width:28px;
+  height:28px;
+  border-radius:999px;
+  border:2px solid rgba(255,255,255,0.9);
+  margin-left:-8px;
+  background:#fff;
+}
+
+.gt-avatars img:first-child{
+  margin-left:0;
+}
+
+.gt-stars{
+  color:#fbbf24; /* gold */
+  font-size:14px;
+  line-height:1;
+}
+
+.gt-rating-copy{
+  opacity:0.9;
+}
+
+/* Mobile tightening */
+@media (max-width:640px){
+  .gt-rating{
+    font-size:12px;
+    gap:10px;
+  }
+  .gt-avatars img{
+    width:24px;
+    height:24px;
+  }
+}
 </style>
 </head>
 
@@ -170,6 +216,23 @@
   <button class="gt-cta" type="submit">GET A QUOTE</button>
 </form>
 <div class="gt-cta-sub">Takes a few minutes.</div>
+<div class="gt-rating">
+  <div class="gt-avatars">
+    <img src="/assets/avatar-1.jpg" alt="" />
+    <img src="/assets/avatar-2.jpg" alt="" />
+    <img src="/assets/avatar-3.jpg" alt="" />
+    <img src="/assets/avatar-4.jpg" alt="" />
+  </div>
+
+  <div class="gt-rating-text">
+    <div class="gt-stars" aria-hidden="true">
+      ★★★★★
+    </div>
+    <div class="gt-rating-copy">
+      1,000,000+ truckers insured through our partners
+    </div>
+  </div>
+</div>
 <script>
   (function () {
     const input = document.getElementById("zipInput");
