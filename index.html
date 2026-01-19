@@ -149,42 +149,24 @@
 }
 
 .gt-shield{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+
+.gt-shield-ico{
   width:18px;
   height:18px;
-  display:inline-block;
-  position:relative;
-  flex-shrink:0;
-  opacity:0.9;
+  display:block;
 }
 
-.gt-shield::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:#e5e7eb; /* light neutral gray */
-  clip-path: polygon(
-    50% 0%,
-    100% 18%,
-    100% 70%,
-    50% 100%,
-    0% 70%,
-    0% 18%
-  );
+.gt-shield-ico path:first-child{
+  fill:#e5e7eb; /* outer shield */
 }
 
-.gt-shield::after{
-  content:"";
-  position:absolute;
-  inset:4px;
-  background:#9ca3af; /* darker inner shield */
-  clip-path: polygon(
-    50% 0%,
-    100% 22%,
-    100% 72%,
-    50% 100%,
-    0% 72%,
-    0% 22%
-  );
+.gt-shield-ico path:last-child{
+  fill:#9ca3af; /* inner shield */
 }
 .gt-avatars{
   display:flex;
@@ -266,7 +248,12 @@
 <div class="gt-rating-text">
   <div class="gt-rating-copy">
     1,000,000+ clients insured by our partners
-    <span class="gt-shield" aria-hidden="true"></span>
+<span class="gt-shield" aria-hidden="true">
+  <svg viewBox="0 0 24 24" class="gt-shield-ico" focusable="false" aria-hidden="true">
+    <path d="M12 2.5 20 6v6.6c0 5.2-3.4 9.2-8 11-4.6-1.8-8-5.8-8-11V6l8-3.5Z"/>
+    <path d="M12 5.2 17.8 7.8v4.9c0 4-2.4 7.1-5.8 8.7-3.4-1.6-5.8-4.7-5.8-8.7V7.8L12 5.2Z"/>
+  </svg>
+</span>
   </div>
 </div>
 </div>
