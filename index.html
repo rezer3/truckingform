@@ -142,27 +142,48 @@
   gap:6px;
 }
 
+.gt-rating-copy{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
 .gt-shield{
-  width:14px;
-  height:14px;
+  width:18px;
+  height:18px;
   display:inline-block;
-  background: rgba(34,197,94,0.15);
-  border-radius:4px;
   position:relative;
+  flex-shrink:0;
+  opacity:0.9;
 }
 
 .gt-shield::before{
   content:"";
   position:absolute;
-  inset:3px;
-  background:#22c55e;
+  inset:0;
+  background:#e5e7eb; /* light neutral gray */
   clip-path: polygon(
     50% 0%,
-    100% 20%,
-    100% 65%,
+    100% 18%,
+    100% 70%,
     50% 100%,
-    0% 65%,
-    0% 20%
+    0% 70%,
+    0% 18%
+  );
+}
+
+.gt-shield::after{
+  content:"";
+  position:absolute;
+  inset:4px;
+  background:#9ca3af; /* darker inner shield */
+  clip-path: polygon(
+    50% 0%,
+    100% 22%,
+    100% 72%,
+    50% 100%,
+    0% 72%,
+    0% 22%
   );
 }
 .gt-avatars{
@@ -243,9 +264,9 @@
   </div>
 
 <div class="gt-rating-text">
-  <span class="gt-shield" aria-hidden="true"></span>
   <div class="gt-rating-copy">
     1,000,000+ clients insured by our partners
+    <span class="gt-shield" aria-hidden="true"></span>
   </div>
 </div>
 </div>
