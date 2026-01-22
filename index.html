@@ -205,6 +205,22 @@
     height:24px;
   }
 }
+/* Subtle infinite “bob” animation for the GET A QUOTE button */
+@keyframes gt-bob {
+  0%, 100% { top: 0; }
+  50% { top: -6px; } /* adjust to taste: -4px to -10px */
+}
+
+.gt-cta {
+  position: relative;        /* required for 'top' animation */
+  animation: gt-bob 1.6s ease-in-out infinite;
+  will-change: top;
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .gt-cta { animation: none; }
+}
 </style>
 </head>
 
