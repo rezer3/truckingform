@@ -212,9 +212,16 @@
 }
 
 .gt-cta {
-  position: relative;        /* required for 'top' animation */
+  position: relative;
   animation: gt-bob 1.6s ease-in-out infinite;
-  will-change: top;
+  will-change: top, opacity;
+  transition: opacity 0.18s ease;
+}
+
+/* Stop bob + fade slightly on hover */
+.gt-cta:hover {
+  animation-play-state: paused;
+  opacity: 0.88; /* adjust: 0.85–0.92 */
 }
 
 /* Respect reduced-motion preferences */
