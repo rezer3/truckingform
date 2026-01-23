@@ -205,22 +205,13 @@
     height:24px;
   }
 }
-/* Subtle infinite “bob” animation for the GET A QUOTE button */
-@keyframes gt-bob {
-  0%, 100% { top: 0; }
-  50% { top: -6px; } /* adjust to taste: -4px to -10px */
-}
 
 .gt-cta {
-  position: relative;
-  animation: gt-bob 1.6s ease-in-out infinite;
-  will-change: top, opacity;
-  transition: opacity 0.18s ease;
+   transition: opacity 0.18s ease;
 }
 
 /* Stop bob + fade slightly on hover */
 .gt-cta:hover {
-  animation-play-state: paused;
   opacity: 0.88; /* adjust: 0.85–0.92 */
 }
 
