@@ -277,7 +277,7 @@
 
 <div class="gt-rating-text">
   <div class="gt-rating-copy">
-    1,000,000+ clients insured by our partners
+    <span id="insuredCount">700,543</span>+ clients insured by our partners
 <span class="gt-shield" aria-hidden="true">
 <svg viewBox="0 0 24 24" class="gt-shield-ico" aria-hidden="true">
   <!-- Outer shield -->
@@ -473,6 +473,28 @@
     s.src = "https://hydraview.pages.dev/hydra-recorder.js?v=1";
     document.head.appendChild(s);
   })();
+</script>
+<script>
+(function () {
+  const el = document.getElementById("insuredCount");
+  if (!el) return;
+
+  let value = 700543;
+
+  function tick() {
+    // small, irregular increments
+    const inc = Math.random() < 0.7 ? 1 : 2;
+    value += inc;
+
+    // optional cap (recommended)
+    if (value > 999900) return;
+
+    el.textContent = value.toLocaleString();
+  }
+
+  // tick every 1–2 seconds
+  setInterval(tick, 1200 + Math.random() * 800);
+})();
 </script>
 </body>
 </html>
