@@ -27,6 +27,42 @@
 </script>
   <link rel="stylesheet" href="landing.css">
   <style>
+    .gt-logo-red {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+/* Shine overlay */
+.gt-logo-red::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 120%;
+  height: 100%;
+  background: linear-gradient(
+    110deg,
+    transparent 40%,
+    rgba(255,255,255,0.45) 50%,
+    transparent 60%
+  );
+  animation: gt-shine 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes gt-shine {
+  0%   { left: -120%; }
+  12%  { left: 120%; }
+  100% { left: 120%; }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .gt-logo-red::after {
+    animation: none;
+  }
+}
     .dot{
   width:9px;
   height:9px;
