@@ -498,7 +498,15 @@
   }
 
   // tick every 1–2 seconds
-  setInterval(tick, 1200 + Math.random() * 800);
+  function scheduleNextTick() {
+  const delay = 800 + Math.random() * 800; // 0.8s – 1.6s
+  setTimeout(() => {
+    tick();
+    scheduleNextTick();
+  }, delay);
+}
+
+scheduleNextTick();
 })();
 </script>
 </body>
