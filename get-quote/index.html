@@ -49,6 +49,12 @@
   overflow-x: hidden;
   width: 100%;
 }
+.quoteIdFooter{
+  margin-top: 14px;
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 700;
+}
       body{
         margin:0;
         font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
@@ -503,6 +509,7 @@
           <a href="https://greattruckinginsurance.com/terms-of-use/" id="tosLink">Terms of Use</a>
           <a href="https://greattruckinginsurance.com/California-Privacy-Choices/" id="caLink">California Privacy Choices</a>
         </div>
+        <div id="quoteIdFooter" class="quoteIdFooter"></div>
       </div>
     </div>
 
@@ -567,16 +574,17 @@ function loadConsentConfirmationOnce() {
          STATE + STEPS
       ========================= */
       const state = {
-        zip: "",
-        zipState: "", // e.g. "Ohio"
-        truckingType: "",
-        insuranceStatus: "",
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        turnstileToken: null
-      };
+  zip: "",
+  zipState: "",
+  truckingType: "",
+  insuranceStatus: "",
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  turnstileToken: null,
+  quoteId: "" // <-- add
+};
 
       const steps = [
         { key: "zip", pct: 0, question: "What’s your ZIP?", agent: "We only ask what we need.", showSocial:false },
@@ -1049,6 +1057,7 @@ function loadConsentConfirmationOnce() {
 
     const leadPayload = {
       funnel: "truckingform",
+      quote_id: state.quoteId || "",
       zip: state.zip || "",
       state: state.zipState || "",
       trucking_type: state.truckingType || "",
@@ -1085,7 +1094,10 @@ function loadConsentConfirmationOnce() {
       return setError("Lead submit failed.");
     }
 
-window.location.href = smsWasSent ? "/get-quote/thanks.html?m=sms" : "/get-quote/thanks.html";
+const qid = encodeURIComponent(state.quoteId || "");
+window.location.href = smsWasSent
+  ? `/get-quote/thanks.html?m=sms&qid=${qid}`
+  : `/get-quote/thanks.html?qid=${qid}`;
   }
 
   btn.addEventListener("click", handleFinal);
@@ -1106,12 +1118,36 @@ window.location.href = smsWasSent ? "/get-quote/thanks.html?m=sms" : "/get-quote
         return escapeHtml(s).replaceAll("\n"," ");
       }
 
+
+     const QUOTE_ID_KEY = "truckingform_quote_id";
+
+function generateQuoteId(){
+  // Format: TRK-842917 (6 digits)
+  const n = (crypto.getRandomValues(new Uint32Array(1))[0] % 900000) + 100000;
+  return `TRK-${n}`;
+}
+
+function getOrCreateQuoteId(){
+  let qid = sessionStorage.getItem(QUOTE_ID_KEY);
+  if (!qid) {
+    qid = generateQuoteId();
+    sessionStorage.setItem(QUOTE_ID_KEY, qid);
+  }
+  return qid;
+}
+
+function renderQuoteIdFooter(qid){
+  const el = document.getElementById("quoteIdFooter");
+  if (el) el.textContent = `Quote ID: ${qid}`;
+} 
       /* =========================
          INIT
       ========================= */
    (async function init(){
   await loadRuntimeConfig();
 
+  state.quoteId = getOrCreateQuoteId();
+renderQuoteIdFooter(state.quoteId);
   const u = new URL(location.href);
 
   // 1) Optional: accept ZIP passed from landing page
