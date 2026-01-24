@@ -21,7 +21,8 @@
     <div class="card">
       <h1 id="headline">Thanks — we got it.</h1>
       <p id="msg"></p>
-
+      <p id="quoteIdLine" class="muted" style="margin-top:10px;"></p>
+      
   <a class="cta" href="tel:+18137618881">
   Call (813) 761 - 8881
 </a>
@@ -36,7 +37,16 @@
     const m = new URLSearchParams(location.search).get("m");
     const headline = document.getElementById("headline");
     const msg = document.getElementById("msg");
+const qid = new URLSearchParams(location.search).get("qid") || "";
+const quoteIdLine = document.getElementById("quoteIdLine");
 
+// fallback if user lands without qid for some reason
+const stored = sessionStorage.getItem("truckingform_quote_id") || "";
+const finalQid = qid || stored;
+
+if (quoteIdLine) {
+  quoteIdLine.textContent = finalQid ? `Quote ID: ${finalQid}` : "";
+}
     if (m === "sms") {
       headline.textContent = "Thanks — check your phone.";
       msg.textContent = "We’re sending your link now. If you don’t see it in about a minute, tap Call.";
