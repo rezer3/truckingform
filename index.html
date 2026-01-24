@@ -494,7 +494,97 @@
     </div>
     <div class="gt-footer-right">We connect you with licensed insurance providers. 2026 Merimack.com, DBA "Great Trucking Insurance"</div>
   </footer>
+<script>
+(function () {
+  // Public outputs Hydra can read
+  window.__devtoolsScore = 0;
+  window.__devtoolsSignals = {
+    dockWidth: false,
+    dockHeight: false,
+    resizeNoOrientation: false,
+    debuggerPause: false
+  };
 
+  // Tunables (keep conservative)
+  const DOCK_THRESHOLD_PX = 160;     // diff between outer/inner to suspect docked devtools
+  const RESIZE_THRESHOLD_PX = 180;   // big resize without orientation change
+  const PAUSE_DRIFT_MS = 900;        // drift threshold to suspect debugger pause / devtools breakpoint
+
+  let lastInnerW = window.innerWidth;
+  let lastInnerH = window.innerHeight;
+  let lastOrientation = (screen.orientation && screen.orientation.type) || (window.orientation + "") || "";
+
+  function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
+
+  function computeDockSignals() {
+    const dw = Math.abs((window.outerWidth || 0) - window.innerWidth);
+    const dh = Math.abs((window.outerHeight || 0) - window.innerHeight);
+
+    // Devtools docked right or bottom often manifests as big outer-inner delta
+    window.__devtoolsSignals.dockWidth = dw > DOCK_THRESHOLD_PX;
+    window.__devtoolsSignals.dockHeight = dh > DOCK_THRESHOLD_PX;
+  }
+
+  function onResize() {
+    const nowW = window.innerWidth;
+    const nowH = window.innerHeight;
+
+    const ori = (screen.orientation && screen.orientation.type) || (window.orientation + "") || "";
+    const orientationChanged = ori && ori !== lastOrientation;
+
+    const bigResize =
+      Math.abs(nowW - lastInnerW) > RESIZE_THRESHOLD_PX ||
+      Math.abs(nowH - lastInnerH) > RESIZE_THRESHOLD_PX;
+
+    // “resize with no orientation change” heuristic
+    window.__devtoolsSignals.resizeNoOrientation = Boolean(bigResize && !orientationChanged);
+
+    lastInnerW = nowW;
+    lastInnerH = nowH;
+    lastOrientation = ori;
+
+    computeDockSignals();
+    recomputeScore();
+  }
+
+  // Debugger pause / devtools breakpoint heuristic via timer drift
+  let lastTick = performance.now();
+  setInterval(() => {
+    const now = performance.now();
+    const drift = now - lastTick - 250; // interval=250ms
+    lastTick = now;
+
+    // If tab is backgrounded you can also get drift; that's why we keep this weighted, not decisive.
+    window.__devtoolsSignals.debuggerPause = drift > PAUSE_DRIFT_MS;
+
+    // Only recompute occasionally to reduce churn
+    recomputeScore();
+  }, 250);
+
+  function recomputeScore() {
+    // Weighted scoring (conservative)
+    let score = 0;
+    if (window.__devtoolsSignals.dockWidth) score += 35;
+    if (window.__devtoolsSignals.dockHeight) score += 35;
+    if (window.__devtoolsSignals.resizeNoOrientation) score += 20;
+    if (window.__devtoolsSignals.debuggerPause) score += 25;
+
+    // Normalize / clamp
+    window.__devtoolsScore = clamp(score, 0, 100);
+  }
+
+  window.addEventListener("resize", onResize, { passive: true });
+  if (screen.orientation && screen.orientation.addEventListener) {
+    screen.orientation.addEventListener("change", onResize);
+  } else {
+    window.addEventListener("orientationchange", onResize, { passive: true });
+  }
+
+  // Initial
+  computeDockSignals();
+  recomputeScore();
+})();
+</script>
 <!-- Hydra Recorder (rrweb) -->
 <!-- rrweb (dependency) -->
 <script src="https://unpkg.com/rrweb@1.1.3/dist/rrweb.min.js"></script>
