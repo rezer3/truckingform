@@ -1122,9 +1122,16 @@ window.location.href = smsWasSent
      const QUOTE_ID_KEY = "truckingform_quote_id";
 
 function generateQuoteId(){
-  // Format: TRK-842917 (6 digits)
-  const n = (crypto.getRandomValues(new Uint32Array(1))[0] % 900000) + 100000;
-  return `TRK-${n}`;
+  const d = new Date();
+  const yy = String(d.getFullYear()).slice(-2);
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  const ymd = `${yy}${mm}${dd}`;
+
+  const n = crypto.getRandomValues(new Uint32Array(1))[0];
+  const rand = (n % (36 ** 6)).toString(36).toUpperCase().padStart(6, "0");
+
+  return `Q-${ymd}-${rand}`;
 }
 
 function getOrCreateQuoteId(){
