@@ -1058,6 +1058,7 @@ function loadConsentConfirmationOnce() {
     const leadPayload = {
       funnel: "truckingform",
       quote_id: state.quoteId || "",
+      hydra_session_id: getHydraSessionId(),
       zip: state.zip || "",
       state: state.zipState || "",
       trucking_type: state.truckingType || "",
@@ -1120,6 +1121,22 @@ window.location.href = smsWasSent
 
 
      const QUOTE_ID_KEY = "truckingform_quote_id";
+
+     function getHydraSessionId() {
+  // Preferred: recorder sets this (you can add it to hydra-recorder.js)
+  if (typeof window.HYDRA_SESSION_ID === "string" && window.HYDRA_SESSION_ID) {
+    return window.HYDRA_SESSION_ID;
+  }
+
+  // Fallbacks: recorder stores it
+  const ss = sessionStorage.getItem("hydra_session_id");
+  if (ss) return ss;
+
+  const ls = localStorage.getItem("hydra_session_id");
+  if (ls) return ls;
+
+  return "";
+}
 
 function generateQuoteId(){
   const d = new Date();
