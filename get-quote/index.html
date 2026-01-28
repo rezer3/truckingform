@@ -934,6 +934,17 @@ function loadConsentConfirmationOnce() {
   const phoneInput = $("phoneInput");
   phoneInput.focus();
 
+  function setSubmitting(isSubmitting, label) {
+  btn.dataset.prevText = btn.dataset.prevText || btn.textContent;
+  btn.disabled = !!isSubmitting;
+
+  if (isSubmitting) {
+    btn.textContent = label || "Submitting…";
+  } else {
+    btn.textContent = btn.dataset.prevText || "Request My Options";
+  }
+}
+
   function parseUSPhone(raw) {
     const lib = window.libphonenumber;
     if (!lib || typeof lib.parsePhoneNumberFromString !== "function") return null;
@@ -1015,8 +1026,16 @@ function loadConsentConfirmationOnce() {
     const v = validateLocal();
     if (!v.ok) return setError(v.msg);
 
+  if (btn.dataset.submitting === "1") return;
+btn.dataset.submitting = "1";
+
+setSubmitting(true, "Submitting…");
+setError("");
+
     // Turnstile is required only at submit time
     if (!state.turnstileToken) {
+      setSubmitting(false);
+      btn.dataset.submitting = "0";
       return setError("Please complete the verification.");
     }
 
@@ -1036,14 +1055,17 @@ function loadConsentConfirmationOnce() {
       j = await res.json().catch(() => null);
 
       if (!res.ok || !j || j.ok !== true) {
-        const err = String(j?.error || "");
-        if (err.toLowerCase().includes("turnstile")) {
-          return setError("Please complete the verification.");
-        }
-        // Keep your desired copy for all phone rejects
-        return setError("Enter valid phone number.");
-      }
+  setSubmitting(false);
+  btn.dataset.submitting = "0";
+  const err = String(j?.error || "");
+  if (err.toLowerCase().includes("turnstile")) {
+    return setError("Please complete the verification.");
+  }
+  return setError("Enter valid phone number.");
+}
     } catch {
+      setSubmitting(false);
+      btn.dataset.submitting = "0";
       return setError("Enter valid phone number.");
     }
 
@@ -1088,12 +1110,16 @@ function loadConsentConfirmationOnce() {
         body: JSON.stringify(leadPayload),
       });
 
-      if (!leadRes.ok) {
-        return setError("Lead submit failed.");
-      }
+     if (!leadRes.ok) {
+  setSubmitting(false);
+  btn.dataset.submitting = "0";
+  return setError("Lead submit failed.");
+}
     } catch {
-      return setError("Lead submit failed.");
-    }
+  setSubmitting(false);
+  btn.dataset.submitting = "0";
+  return setError("Lead submit failed.");
+}
 
 const qid = encodeURIComponent(state.quoteId || "");
 window.location.href = smsWasSent
